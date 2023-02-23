@@ -7,17 +7,13 @@ RUN apt-get install -y php7.3\
 						php-mysql\
 						mariadb-client
 
-RUN wget https://fr.wordpress.org/wordpress-6.1.1-fr_FR.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf wordpress-6.1.1-fr_FR.tar.gz && rm wordpress-6.1.1-fr_FR.tar.gz
+EXPOSE 9000
 
-RUN	chown -R root:root /var/www/wordpress
-COPY conf/auto_config.sh .
-RUN chmod +x auto_config.sh
-RUN mkdir -p /run/php
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
+COPY ./tools /var/www
 
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN	chmod +x wp-cli.phar
-RUN	mv wp-cli.phar /usr/local/bin/wp
-RUN wp core download --allow-root
+# Bonus: Static Website
+COPY conf/index.html /var/www/index.html
+COPY conf/styles.css /var/www/styles.css
 
-CMD [ "sh", "auto_config.sh" ]
+CMD bash /var/www/auto_config.sh
