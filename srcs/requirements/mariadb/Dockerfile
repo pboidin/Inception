@@ -2,8 +2,9 @@ FROM debian:buster
 
 RUN apt update -y && apt upgrade -y && apt install mariadb-server -y
 RUN apt install vim -y && apt install curl -y
+RUN mkdir -p /var/www/
 
-COPY ./tools .
+COPY ./tools /var/www/
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE 3306
