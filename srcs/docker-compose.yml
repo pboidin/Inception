@@ -25,7 +25,7 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
-    hostname: localhot
+    hostname: localhost
     networks:
       - inception
     volumes:
@@ -62,7 +62,7 @@ services:
     container_name: adminer
     ports:
       - "9000:8080"
-    image: adminer:latest
+    image: adminer:4
     restart: unless-stopped
     networks:
       - inception
@@ -74,7 +74,7 @@ services:
     ports:
       - "8000:8000"
       - "9443:9443"
-    image: portainer/portainer-ee:latest
+    image: portainer/portainer-ce:latest
     restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -87,16 +87,16 @@ volumes:
     name: wp
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/${USER}/data/wp'
+      type: none
+      o: bind
+      device: /home/${USER}/data/wp
   db:
     name: db
     driver: local
     driver_opts:
-      type: 'none' 
-      o: 'bind'
-      device: '/home/${USER}/data/db'
+      type: none
+      o: bind
+      device: /home/${USER}/data/db
 
 networks:
   inception:
