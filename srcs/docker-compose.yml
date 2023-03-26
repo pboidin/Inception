@@ -6,19 +6,19 @@ services:
     build: ./requirements/mariadb
     restart:  always
     env_file: .env
-    networks:
-      - inception
     volumes:
       - db:/var/lib/mysql
+    networks:
+      - inception
 
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
     env_file: .env
-    networks:
-      - inception
     volumes:
       - wp:/var/www/html/wordpress
+    networks:
+      - inception
     depends_on:
       - mariadb
 
@@ -26,10 +26,10 @@ services:
     container_name: nginx
     build: ./requirements/nginx
     hostname: localhost
-    networks:
-      - inception
     volumes:
       - wp:/var/www/html/wordpress
+    networks:
+      - inception
     depends_on:
       - wordpress
     ports:
@@ -49,6 +49,7 @@ services:
     build: requirements/bonus/ftp-server
     ports:
       - "21:21"
+      - "21100-21110:21100-21110"
     volumes:
       - wp:/var/www/html/wordpress
     networks:
@@ -58,29 +59,30 @@ services:
       FTP_USR: ${FTP_USR}
       FTP_PWD: ${FTP_PWD}
   
-  adminer:
-    container_name: adminer
-    ports:
-      - "9000:8080"
-    image: adminer:4
-    restart: unless-stopped
-    networks:
-      - inception
-    depends_on:
-      - mariadb
-  
   portainer:
+    image: portainer/portainer-ce:latest
     container_name: portainer
     ports:
       - "8000:8000"
       - "9443:9443"
-    image: portainer/portainer-ce:latest
-    restart: always
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     security_opt:
       - no-new-privileges:true
+    restart: always
+  
+  adminer:
+    image: adminer:4
+    container_name: adminer
+    restart: unless-stopped
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    ports:
+      - "9000:8080"
+  
 
 volumes:
   wp:

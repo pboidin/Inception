@@ -1,7 +1,8 @@
 FROM debian:buster
 
-RUN apt update -y && apt upgrade -y && apt install nginx -y && apt install openssl -y
-RUN apt install vim -y && apt install curl -y
+RUN apt update -y 
+RUN apt install -y nginx
+RUN apt install -y openssl
 
 EXPOSE 443
 
