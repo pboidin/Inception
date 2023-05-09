@@ -19,7 +19,7 @@ server {
 
 #	La directive index spécifie les fichiers à utiliser comme
 #	index lors du traitement des requêtes sur votre serveur.
-	index index.php index.html index.htm;
+	index index.html index.php index.htm;
 
 #	Dans ce bloc de localisation, nous utiliserons la directive try_files pour vérifier les fichiers, 
 #	les fichiers qui correspondent aux requêtes URI individuelles. Au lieu de retourner un statut par défaut de 404 not found, 

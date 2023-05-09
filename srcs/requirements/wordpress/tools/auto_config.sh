@@ -30,6 +30,7 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 #	Static Website
 		mkdir -p /var/www/html/wordpress/mysite;
 		mv /var/www/index.html /var/www/html/wordpress/mysite/index.html;
+		mv /var/www/stylesperso.css /var/www/html/wordpress/mysite/stylesperso.css;
 
 	wp core download --allow-root;
 	mv /var/www/wp-config.php /var/www/html/wordpress;

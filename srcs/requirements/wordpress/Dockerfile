@@ -14,6 +14,6 @@ COPY ./tools /var/www
 
 # Bonus: Static Website
 COPY conf/index.html /var/www/index.html
-COPY conf/styles.css /var/www/styles.css
+COPY conf/stylesperso.css /var/www/stylesperso.css
 
 CMD bash /var/www/auto_config.sh
