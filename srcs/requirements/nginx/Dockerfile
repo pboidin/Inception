@@ -3,6 +3,7 @@ FROM debian:buster
 RUN apt update -y 
 RUN apt install -y nginx
 RUN apt install -y openssl
+RUN apt install -y curl
 
 EXPOSE 443
 
