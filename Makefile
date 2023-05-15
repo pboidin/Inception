@@ -8,7 +8,6 @@ build:
 		@docker compose -f srcs/docker-compose.yml build
 
 up:
-		@rm -rf /home/${USER}/data
 		@mkdir -p /home/${USER}/data
 		@mkdir -p /home/${USER}/data/db
 		@mkdir -p /home/${USER}/data/wp
