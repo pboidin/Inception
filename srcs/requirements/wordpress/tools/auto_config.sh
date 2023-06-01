@@ -3,15 +3,9 @@
 #	Remplacer toutes les occurrences d'une ligne dans le fichier, en écrasant le fichier:
 sed -i "s/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/" "/etc/php/7.3/fpm/pool.d/www.conf";
 
-#	-R change récursivement les permissions pour les répertoires et leur contenu
-chmod -R 775 /var/www/html/wordpress;
-
-#	L'exemple suivant va changer le propriétaire de tous les fichiers et 
-#	sous-répertoires du répertoire /var/www/html/wordpress pour le nouveau
-#	propriétaire et groupe nommé www-data :
-chown -R www-data /var/www/html/wordpress;
 mkdir -p /run/php/;
 touch /run/php/php7.3-fpm.pid;
+
 
 if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 	echo "Wordpress: setting up..."
@@ -33,7 +27,9 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 		mv /var/www/stylesperso.css /var/www/html/wordpress/mysite/stylesperso.css;
 
 	wp core download --allow-root;
-	mv /var/www/wp-config.php /var/www/html/wordpress;
+	wp config create --dbname=${WORDPRESS_NAME} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --allow-root
+
+#	mv /var/www/wp-config.php /var/www/html/wordpress;
 	echo "Wordpress: creating users..."	
 
 #	Crée les tables WordPress dans la base de données, 
@@ -89,6 +85,15 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 else
 	echo "Wordpress: is already set up!"
 fi
+
+#	-R change récursivement les permissions pour les répertoires et leur contenu
+chmod -R 775 /var/www/html/wordpress;
+
+#	L'exemple suivant va changer le propriétaire de tous les fichiers et 
+#	sous-répertoires du répertoire /var/www/html/wordpress pour le nouveau
+#	propriétaire et groupe nommé www-data :
+chown -R www-data /var/www/html/wordpress;
+
 
 wp redis enable --allow-root
 

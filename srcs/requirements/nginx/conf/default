@@ -24,9 +24,9 @@ server {
 #	Dans ce bloc de localisation, nous utiliserons la directive try_files pour vérifier les fichiers, 
 #	les fichiers qui correspondent aux requêtes URI individuelles. Au lieu de retourner un statut par défaut de 404 not found, 
 #	nous allons passer le contrôle au fichier Wordpress index.php avec les arguments de requête
-	location / {
-		try_files $uri $uri/ /index.php$is_args$args;
-	}
+#	location / {
+#		try_files $uri $uri/ /index.php$is_args$args;
+#	}
 
 #	Ce bloc d'emplacement va gérer les requêtes PHP et les transmettre par proxy à notre conteneur wordpress. 
 #	Puisque notre image Docker WordPress reposera sur l'image php:fpm, 
@@ -44,6 +44,5 @@ server {
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		fastcgi_param PATH_INFO $fastcgi_path_info;
-
     }
 }

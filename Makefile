@@ -2,16 +2,16 @@ NAME	=	inception
 
 all:		inception
 
-${NAME}:	build up
+${NAME}:	build
+
 
 build:
-		@docker compose -f srcs/docker-compose.yml build
-
-up:
 		@mkdir -p /home/${USER}/data
 		@mkdir -p /home/${USER}/data/db
 		@mkdir -p /home/${USER}/data/wp
-		@docker compose -f srcs/docker-compose.yml up -d
+		@sudo chmod 777 /home/${USER}/data
+		@docker compose -f srcs/docker-compose.yml build
+		@docker compose -f srcs/docker-compose.yml up
 
 down:
 		@docker compose -f srcs/docker-compose.yml down
@@ -26,14 +26,16 @@ clean: down
 		@docker rmi -f $$(docker images -qa);\
 		docker volume rm $$(docker volume ls -q);\
 		docker system prune -a --force
-		sudo rm -Rf /home/${USER}/data/db
-		sudo rm -Rf /home/${USER}/data/wp
-		mkdir /home/${USER}/data/db
-		mkdir /home/${USER}/data/wp
+
+fclean: clean
+		sudo rm -rf /home/${USER}/data/db
+		sudo rm -rf /home/${USER}/data/wp
 
 re:
-		@mkdir -p ../data/wp
-		@mkdir -p ../data/db
+		@mkdir -p /home/${USER}/data
+		@mkdir -p /home/${USER}/data/db
+		@mkdir -p /home/${USER}/data/wp
+		@sudo chmod 777 /home/${USER}/data
 		@docker compose -f srcs/docker-compose.yml build
 		docker compose -f srcs/docker-compose.yml up
 

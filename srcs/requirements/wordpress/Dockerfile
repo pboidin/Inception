@@ -2,13 +2,17 @@ FROM debian:buster
 
 RUN apt update -y && apt-get install -y wget
 RUN apt install -y curl
-RUN apt install -y vim
 RUN apt-get install -y php7.3\
 						php-fpm\
 						php-mysql\
+						php-json\
+						php-cli\
+						php-mbstring\
+						php-xml\
+						php-gd\
+						php-curl\
 						mariadb-client
 
-EXPOSE 9000
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 COPY ./tools /var/www
