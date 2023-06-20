@@ -11,7 +11,7 @@ build:
 		@mkdir -p /home/${USER}/data/wp
 		@sudo chmod 777 /home/${USER}/data
 		@docker compose -f srcs/docker-compose.yml build
-		@docker compose -f srcs/docker-compose.yml up
+		@docker compose -f srcs/docker-compose.yml up -d
 
 down:
 		@docker compose -f srcs/docker-compose.yml down
